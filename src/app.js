@@ -1,7 +1,8 @@
 var http = require('http');
+var config = require('./config');
 
-var app = http.createServer(function (req, resp) {
+http.createServer(function (req, resp) {
     resp.writeHead(200, {'Content-Type': 'text/plain'});
     resp.write('Hello world!');
     resp.end('');
-}).listen(8080);
+}).listen(config.port);
