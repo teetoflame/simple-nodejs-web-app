@@ -8,22 +8,25 @@ http.createServer(function (req, resp) {
     var pathname = url.parse(req.url).pathname;
     var htmlTemplate = '';
     var status = 200;
-    var statusMsg = undefined;
+    var statusMsg = {};
 
-    if (pathname === '/') 
-        htmlTemplate = template.root;
-    else if (pathname === '/create')
-        htmlTemplate = template.create;
-    else if (pathname === '/create_process') {
-        process.create(req, resp);
-        status = 302;
-        statusMsg = {
-            'Location': '/'
-        };
-    }
-    else {
-        status = 404;
-        htmlTemplate = 'Not found';
+    switch (pathname) {
+        case '/':
+            htmlTemplate = template.root;
+            break;
+        case '/create':
+            htmlTemplate = template.create;
+            break;
+        case '/create_process':
+            process.create(req, resp);
+            status = 302;
+            statusMsg = {
+                'Location': '/'
+            };
+            break;
+        default:
+            status = 404;
+            htmlTemplate = 'Not found';
     }
 
     resp.writeHead(status, statusMsg);
