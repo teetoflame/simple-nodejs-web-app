@@ -5,17 +5,19 @@ var template = require('./lib/template');
 var process = require('./lib/process');
 
 http.createServer(function (req, resp) {
-    var pathname = url.parse(req.url).pathname;
+    var urlParse = url.parse(req.url, true);
+    var pathname = urlParse.pathname;
+    var queryObj = urlParse.query;
     var htmlTemplate = '';
     var status = 200;
-    var statusMsg = {};
+    var statusMsg = {'Content-Type': 'text/html'};
 
     switch (pathname) {
         case '/':
-            htmlTemplate = template.root;
+            htmlTemplate = template.root(queryObj.id);
             break;
         case '/create':
-            htmlTemplate = template.create;
+            htmlTemplate = template.create();
             break;
         case '/create_process':
             process.create(req, resp);

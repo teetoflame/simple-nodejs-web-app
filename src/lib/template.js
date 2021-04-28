@@ -28,20 +28,40 @@ function makeHtmlPostList() {
 }
 
 module.exports = {
-    root: makeHtmlTemplate(`
-    <h3>Posts</h3>
-    <p> 
-        ${makeHtmlPostList()}
-    </p>
-    <p>
-        <a href="/create">Create</a>
-    </p>
-    `),
-    create: makeHtmlTemplate(`
-    <form action="http://localhost:${config.port}/create_process" method="post">
-        <p><input type="text" id="title" name="title" placeholder="Title"></p>
-        <p><textarea id="desc" name="desc" placeholder="Description"></textarea></p>
-        <p><input type="submit"></p>
-    </form>
-    `),
+    root: function(id) {
+        var htmlContent = '<h2>Welcome to My Node.js Web App</h2>';
+        if (id !== undefined) {
+            htmlContent += '<p>';
+            var postPath = `${config.dataDir}/${id}.txt`;
+            if (fs.existsSync(postPath)) {
+                var postDesc = fs.readFileSync(postPath);
+                htmlContent += postDesc;
+            }
+            else
+                htmlContent += 'No post was found.';
+            
+            htmlContent += '</p>';
+        }
+        return makeHtmlTemplate(`
+        <p>${htmlContent}</p>
+        <h3>Posts</h3>
+        <p>${makeHtmlPostList()}</p>
+        <p>
+            <a href="/create">Create</a>
+        </p>
+        `);
+    },
+    create: function() {
+        return makeHtmlTemplate(`
+        <form action="http://localhost:${config.port}/create_process" 
+        method="post">
+            <p><input type="text" id="title" name="title" placeholder="Title">
+            </p>
+            <p><textarea id="desc" name="desc" 
+                placeholder="Description"></textarea>
+            </p>
+            <p><input type="submit"></p>
+        </form>
+    `);
+    },
 };
