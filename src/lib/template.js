@@ -17,16 +17,12 @@ function makeHtmlTemplate(htmlBody) {
 }
 
 function makeHtmlPostList() {
-    var htmlPostList = '';
-    fs.readdir(config.dataDir, function(err, files) {
-        if (err) return console.log(err);
-        
-        htmlPostList = '<ul>';
-        files.forEach(function(filepath) {
-            htmlPostList += `<li>${path.parse(filepath).name}</li>`;
-        });
-        htmlPostList += '</ul>';
+    var htmlPostList = '<ul>';
+    var files = fs.readdirSync(config.dataDir);
+    files.forEach(function(filepath) {
+        htmlPostList += `<li>${path.parse(filepath).name}</li>`;
     });
+    htmlPostList += '</ul>';
 
     return htmlPostList;
 }
