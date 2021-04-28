@@ -1,6 +1,6 @@
 var qs = require('querystring');
 var fs = require('fs');
-var dataDir = `${__dirname}/../../data`;
+var config = require('../config');
 
 module.exports = {
     create: function(req) {
@@ -13,7 +13,7 @@ module.exports = {
         });
         req.on('end', function() {
             var post = qs.parse(body);
-            var path = `${dataDir}/${post.title}.txt`
+            var path = `${config.dataDir}/${post.title}.txt`
             fs.writeFile(path, post.desc, function (err) {
                 if (err) return console.log(err);
                 console.log(`Write a file (${post.title}: ${post.desc})`);
