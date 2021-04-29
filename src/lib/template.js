@@ -77,9 +77,8 @@ module.exports = {
         <form action="http://localhost:${config.port}/update_process" 
         method="post">
             <p>
-            <input type="hidden" id="id" name="id" value=${id}>
             <input type="text" id="title" name="title" placeholder="Title",
-             value="${id}">
+             value="${id}" readonly>
             </p>
             <p><textarea id="desc" name="desc" 
                 placeholder="Description">${postDesc}</textarea>
