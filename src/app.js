@@ -20,7 +20,17 @@ http.createServer(function (req, resp) {
             htmlTemplate = template.create();
             break;
         case '/create_process':
-            process.create(req, resp);
+            process.create(req);
+            status = 302;
+            statusMsg = {
+                'Location': '/'
+            };
+            break;
+        case '/update':
+            htmlTemplate = template.update(queryObj.id);
+            break;
+        case '/update_process':
+            process.update(req);
             status = 302;
             statusMsg = {
                 'Location': '/'
