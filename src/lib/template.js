@@ -34,7 +34,7 @@ function makeHtmlPostList() {
 module.exports = {
     root: function(id) {
         var htmlContent = '<h2>Welcome to My Node.js Web App</h2>';
-        var hrefList = '<a href="/create">Create</a><br>';
+        var controller = '<a href="/create">Create</a><br>'
 
         if (id !== undefined) {
             htmlContent += '<p>';
@@ -42,7 +42,8 @@ module.exports = {
             if (fs.existsSync(postPath)) {
                 var postDesc = fs.readFileSync(postPath, 'utf-8');
                 htmlContent += postDesc;
-                hrefList += `<a href="/update?id=${id}">Update</a>`;
+                controller += `<a href="/update?id=${id}">Update</a>`;
+                controller += this.delete(id);
             }
             else
                 htmlContent += 'No post was found.';
@@ -53,7 +54,7 @@ module.exports = {
         <p>${htmlContent}</p>
         <h3>Posts</h3>
         <p>${makeHtmlPostList()}</p>
-        <p>${hrefList}</p>
+        <p>${controller}</p>
         `);
     },
     create: function() {
@@ -72,7 +73,6 @@ module.exports = {
     update: function(id) {
         var postPath = `${config.dataDir}/${id}.txt`;
         var postDesc = fs.readFileSync(postPath, 'utf-8');
-        console.log(postDesc);
         return makeHtmlTemplate(`
         <form action="http://localhost:${config.port}/update_process" 
         method="post">
@@ -86,5 +86,14 @@ module.exports = {
             <p><input type="submit"></p>
         </form>
         `);
+    },
+    delete: function(id) {
+        return `
+        <form action="http://localhost:${config.port}/delete_process"
+        method="post">
+            <input type="hidden" id="id" name="id" value="${id}">
+            <input type="submit" value="Delete">
+        </form>
+        `;
     }
 };

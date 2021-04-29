@@ -35,7 +35,23 @@ module.exports = {
                 if (err) return console.log(err);
                 console.log(`Update the file "${post.title}.txt"`);
             });
-            console.log(post);
+        });
+    },
+    delete: function(req) {
+        var body = '';
+        req.on('data', function(chunk) {
+            body += chunk;
+
+            if (body.length > 1e6)
+                req.connection.destroy();
+        });
+        req.on('end', function() {
+            var post = qs.parse(body);
+            var path = `${config.dataDir}/${post.id}.txt`;
+            fs.unlink(path, function(err) {
+                if (err) return console.log(err);
+                console.log(`Delete the file "${post.id}.txt"`);
+            });
         });
     }
 };

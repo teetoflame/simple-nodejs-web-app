@@ -36,6 +36,13 @@ http.createServer(function (req, resp) {
                 'Location': '/'
             };
             break;
+        case '/delete_process':
+            process.delete(req);
+            status = 302;
+            statusMsg = {
+                'Location': '/'
+            };
+            break;
         default:
             status = 404;
             htmlTemplate = 'Not found';
