@@ -20,7 +20,11 @@ function makeHtmlPostList() {
     var htmlPostList = '<ul>';
     var files = fs.readdirSync(config.dataDir);
     files.forEach(function(filepath) {
-        htmlPostList += `<li>${path.parse(filepath).name}</li>`;
+        var postId = path.parse(filepath).name;
+        htmlPostList += '<li>';
+        htmlPostList += 
+            `<a href="/?id=${postId}">${path.parse(filepath).name}</a>`;
+        htmlPostList += '</li>';
     });
     htmlPostList += '</ul>';
 
