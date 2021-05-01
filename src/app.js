@@ -1,16 +1,16 @@
-var http = require('http');
-var url = require('url');
-var config = require('./config');
-var template = require('./lib/template');
-var process = require('./lib/process');
+const http = require('http');
+const url = require('url');
+const config = require('./config');
+const template = require('./lib/template');
+const process = require('./lib/process');
 
 http.createServer(function (req, resp) {
-    var urlParse = url.parse(req.url, true);
-    var pathname = urlParse.pathname;
-    var queryObj = urlParse.query;
-    var htmlTemplate = '';
-    var status = 200;
-    var statusMsg = {'Content-Type': 'text/html'};
+    const urlParse = url.parse(req.url, true);
+    const pathname = urlParse.pathname;
+    const queryObj = urlParse.query;
+    let htmlTemplate = '';
+    let status = 200;
+    let statusMsg = {'Content-Type': 'text/html'};
 
     switch (pathname) {
         case '/':

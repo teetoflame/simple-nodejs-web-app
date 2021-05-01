@@ -1,6 +1,6 @@
-var config = require('../config');
-var fs = require('fs');
-var path = require('path');
+const config = require('../config');
+const fs = require('fs');
+const path = require('path');
 
 function makeHtmlTemplate(htmlBody) {
     return `
@@ -17,10 +17,10 @@ function makeHtmlTemplate(htmlBody) {
 }
 
 function makeHtmlPostList() {
-    var htmlPostList = '<ul>';
-    var files = fs.readdirSync(config.dataDir);
+    let htmlPostList = '<ul>';
+    const files = fs.readdirSync(config.dataDir);
     files.forEach(function(filepath) {
-        var postId = path.parse(filepath).name;
+        let postId = path.parse(filepath).name;
         htmlPostList += '<li>';
         htmlPostList += 
             `<a href="/?id=${postId}">${path.parse(filepath).name}</a>`;
@@ -33,12 +33,12 @@ function makeHtmlPostList() {
 
 module.exports = {
     root: function(id) {
-        var htmlContent = '<h2>Welcome to My Node.js Web App</h2>';
-        var controller = '<a href="/create">Create</a><br>'
+        let htmlContent = '<h2>Welcome to My Node.js Web App</h2>';
+        let controller = '<a href="/create">Create</a><br>'
 
         if (id !== undefined) {
             htmlContent += '<p>';
-            var postPath = `${config.dataDir}/${id}.txt`;
+            const postPath = `${config.dataDir}/${id}.txt`;
             if (fs.existsSync(postPath)) {
                 var postDesc = fs.readFileSync(postPath, 'utf-8');
                 htmlContent += postDesc;
@@ -71,8 +71,8 @@ module.exports = {
         `);
     },
     update: function(id) {
-        var postPath = `${config.dataDir}/${id}.txt`;
-        var postDesc = fs.readFileSync(postPath, 'utf-8');
+        const postPath = `${config.dataDir}/${id}.txt`;
+        const postDesc = fs.readFileSync(postPath, 'utf-8');
         return makeHtmlTemplate(`
         <form action="http://localhost:${config.port}/update_process" 
         method="post">

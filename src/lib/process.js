@@ -1,10 +1,10 @@
-var qs = require('querystring');
-var fs = require('fs');
-var config = require('../config');
+const qs = require('querystring');
+const fs = require('fs');
+const config = require('../config');
 
 module.exports = {
     create: function(req) {
-        var body = '';
+        let body = '';
         req.on('data', function(chunk) {
             body += chunk;
 
@@ -12,8 +12,8 @@ module.exports = {
                 req.connection.destroy();
         });
         req.on('end', function() {
-            var post = qs.parse(body);
-            var path = `${config.dataDir}/${post.title}.txt`;
+            const post = qs.parse(body);
+            const path = `${config.dataDir}/${post.title}.txt`;
             fs.writeFile(path, post.desc, function (err) {
                 if (err) return console.log(err);
                 console.log(`Write a file (${post.title}: ${post.desc})`);
@@ -21,7 +21,7 @@ module.exports = {
         });
     },
     update: function(req) {
-        var body = '';
+        let body = '';
         req.on('data', function(chunk) {
             body += chunk;
 
@@ -29,8 +29,8 @@ module.exports = {
                 req.connection.destroy();
         });
         req.on('end', function() {
-            var post = qs.parse(body);
-            var path = `${config.dataDir}/${post.title}.txt`;
+            const post = qs.parse(body);
+            const path = `${config.dataDir}/${post.title}.txt`;
             fs.writeFile(path, post.desc, function(err) {
                 if (err) return console.log(err);
                 console.log(`Update the file "${post.title}.txt"`);
@@ -38,7 +38,7 @@ module.exports = {
         });
     },
     delete: function(req) {
-        var body = '';
+        let body = '';
         req.on('data', function(chunk) {
             body += chunk;
 
@@ -46,8 +46,8 @@ module.exports = {
                 req.connection.destroy();
         });
         req.on('end', function() {
-            var post = qs.parse(body);
-            var path = `${config.dataDir}/${post.id}.txt`;
+            const post = qs.parse(body);
+            const path = `${config.dataDir}/${post.id}.txt`;
             fs.unlink(path, function(err) {
                 if (err) return console.log(err);
                 console.log(`Delete the file "${post.id}.txt"`);
