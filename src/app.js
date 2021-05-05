@@ -4,7 +4,7 @@ const config = require('./config');
 const template = require('./lib/template');
 const process = require('./lib/process');
 
-http.createServer(function (req, resp) {
+http.createServer((req, resp) => {
     const urlParse = url.parse(req.url, true);
     const pathname = urlParse.pathname;
     const queryObj = urlParse.query;

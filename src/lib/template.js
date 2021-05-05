@@ -19,7 +19,7 @@ function makeHtmlTemplate(htmlBody) {
 function makeHtmlPostList() {
     let htmlPostList = '<ul>';
     const files = fs.readdirSync(config.dataDir);
-    files.forEach(function(filepath) {
+    files.forEach((filepath) => {
         let postId = path.parse(filepath).name;
         htmlPostList += '<li>';
         htmlPostList += 
@@ -32,7 +32,7 @@ function makeHtmlPostList() {
 }
 
 module.exports = {
-    root: function(id) {
+    root: (id) => {
         let htmlContent = '<h2>Welcome to My Node.js Web App</h2>';
         let controller = '<a href="/create">Create</a><br>'
 
@@ -57,7 +57,7 @@ module.exports = {
         <p>${controller}</p>
         `);
     },
-    create: function() {
+    create: () => {
         return makeHtmlTemplate(`
         <form action="http://localhost:${config.port}/create_process" 
         method="post">
@@ -70,7 +70,7 @@ module.exports = {
         </form>
         `);
     },
-    update: function(id) {
+    update: (id) => {
         const postPath = `${config.dataDir}/${id}.txt`;
         const postDesc = fs.readFileSync(postPath, 'utf-8');
         return makeHtmlTemplate(`
@@ -87,7 +87,7 @@ module.exports = {
         </form>
         `);
     },
-    delete: function(id) {
+    delete: (id) => {
         return `
         <form action="http://localhost:${config.port}/delete_process"
         method="post">
