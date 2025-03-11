@@ -1,0 +1,42 @@
+name: CD Pipeline (No Docker)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Navigate to project folder or clone if not exists
+            if [ ! -d "/home/${{ secrets.SSH_USER }}/nodejs-app" ]; then
+              git clone https://github.com/toluxfash/simple-nodejs-web-app.git /home/${{ secrets.SSH_USER }}/nodejs-app
+            fi
+            
+            cd /home/${{ secrets.SSH_USER }}/nodejs-app
+
+            # Pull latest code
+            git pull origin main
+
+            # Install dependencies
+            npm install
+
+            # Restart application with PM2
+            pm2 stop simple-node-app || true
+            pm2 start src/app.js --name simple-node-app
+
+            # Ensure PM2 restarts the app on reboot
+            pm2 save
+            pm2 startup
