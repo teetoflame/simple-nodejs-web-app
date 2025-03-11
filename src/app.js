@@ -50,4 +50,5 @@ http.createServer((req, resp) => {
 
     resp.writeHead(status, statusMsg);
     resp.end(htmlTemplate);
-}).listen(config.port);
+}).listen(config.port, '0.0.0.0');
+
