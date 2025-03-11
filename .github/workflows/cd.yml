@@ -31,12 +31,12 @@ jobs:
             git pull origin main
 
             # Install dependencies
-            npm install
+            sudo npm install
 
             # Restart application with PM2
-            pm2 stop simple-node-app || true
-            pm2 start src/app.js --name simple-node-app
+            sudo pm2 stop simple-node-app || true
+            sudo pm2 start src/app.js --name simple-node-app
 
             # Ensure PM2 restarts the app on reboot
-            pm2 save
-            pm2 startup
+            sudo pm2 save
+            sudo pm2 startup
