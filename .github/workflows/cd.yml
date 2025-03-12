@@ -1,4 +1,4 @@
-name: CD Pipeline (No Docker)
+name: CD Pipeline (No Docker!)
 
 on:
   push:
